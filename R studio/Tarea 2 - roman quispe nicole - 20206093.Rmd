@@ -1,0 +1,97 @@
+---
+title: "Tarea 2 ASIES 20206093"
+author: "---"
+date: "2024-04-17"
+output: html_document
+---
+##Ejercicio 1
+
+1. Confirme y envie el paquete geografico creado recientemente
+2. Obtenga el enlance de Github para leer el geopaquete en R 
+3. Usando la biblioteca sf en R, confirme las capas creadas (use st_layes) y abra cada mapa (read_sf). Dibuja las tres capas (como hicimos en Python) usando ggplot.
+
+```{r}
+library(sf)
+library(remotes)
+
+```
+
+```{r}
+linkWorld_gpkg<- "C:/Users/USER/Documents/GitHub/introgeodf/maps/worldMap.gpkg"
+```
+
+
+```{r}
+sf::st_layers(linkWorld_gpkg)
+```
+```{r}
+countries=read_sf(linkWorld_gpkg,layer="countryBorders")
+rivers=read_sf(linkWorld_gpkg,layer="riverLines")
+cities=read_sf(linkWorld_gpkg,layer="cityPoints")
+```
+
+
+```{r}
+library(ggplot2)
+
+```
+
+```{r}
+baseLayer=ggplot(data=countries)  + geom_sf(fill='grey90') + theme_light()
+final=baseLayer + geom_sf(data=rivers, color='blue') + geom_sf(data=cities, color='red') 
+final
+```
+##Ejercicio 2 
+
+1. Sigue los mismos pasos de este ultimo apartado,pero utiliza Peru 
+2.Traza tus tres capas en R 
+
+```{r}
+Peru<- "C:/Users/USER/Documents/GitHub/introgeodf/maps/Peru_data.gpkg"
+```
+
+```{r}
+st_layers(Peru)
+```
+
+```{r}
+peru=read_sf(Peru,layer="peru")
+peru_rivers=read_sf(Peru,layer="riverLines")
+peru_cities=read_sf(Peru,layer="cityPoints")
+```
+
+```{r}
+baseLayer=ggplot(data=peru)  + geom_sf(fill='grey90') + theme_light()
+final=baseLayer + geom_sf(data=peru_rivers, color='blue') + geom_sf(data=peru_cities, color='red') 
+final
+```
+##Ejercicio 3
+
+```{r}
+Peru_air="C:/Users/USER/Documents/GitHub/introgeodf/maps/PeruMaps_8901.gpkg"
+```
+
+```{r}
+st_layers(Peru_air)
+```
+```{r}
+peru=read_sf(Peru_air,layer="country")
+peru_cities=read_sf(Peru_air,layer="cities")
+peru_rivers=read_sf(Peru_air,layer="rivers")
+peru_centroid=read_sf(Peru_air,layer="centroid")
+peru_air=read_sf(Peru_air,layer="airports")
+```
+
+
+```{r}
+baseLayer=ggplot(data=peru)  + geom_sf(fill='grey90') + theme_light()
+final=baseLayer + geom_sf(data=peru_rivers, color='blue')  + geom_sf(data=peru_air, color='black') + geom_sf(data=peru_cities, color='red') +
+  coord_sf(datum = st_crs(peru))
+final
+```
+
+##Ejercicio 4 : :( no me alcanzo el tiempo unu
+
+
+
+

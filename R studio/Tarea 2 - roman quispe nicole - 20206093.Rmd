@@ -4,11 +4,12 @@ author: "---"
 date: "2024-04-17"
 output: html_document
 ---
-##Ejercicio 1
 
-1. Confirme y envie el paquete geografico creado recientemente
-2. Obtenga el enlance de Github para leer el geopaquete en R 
-3. Usando la biblioteca sf en R, confirme las capas creadas (use st_layes) y abra cada mapa (read_sf). Dibuja las tres capas (como hicimos en Python) usando ggplot.
+# Ejercicio 1
+
+1.  Confirme y envie el paquete geografico creado recientemente
+2.  Obtenga el enlance de Github para leer el geopaquete en R
+3.  Usando la biblioteca sf en R, confirme las capas creadas (use st_layes) y abra cada mapa (read_sf). Dibuja las tres capas (como hicimos en Python) usando ggplot.
 
 ```{r}
 library(sf)
@@ -20,16 +21,15 @@ library(remotes)
 linkWorld_gpkg<- "C:/Users/USER/Documents/GitHub/introgeodf/maps/worldMap.gpkg"
 ```
 
-
 ```{r}
 sf::st_layers(linkWorld_gpkg)
 ```
+
 ```{r}
 countries=read_sf(linkWorld_gpkg,layer="countryBorders")
 rivers=read_sf(linkWorld_gpkg,layer="riverLines")
 cities=read_sf(linkWorld_gpkg,layer="cityPoints")
 ```
-
 
 ```{r}
 library(ggplot2)
@@ -41,10 +41,10 @@ baseLayer=ggplot(data=countries)  + geom_sf(fill='grey90') + theme_light()
 final=baseLayer + geom_sf(data=rivers, color='blue') + geom_sf(data=cities, color='red') 
 final
 ```
-##Ejercicio 2 
 
-1. Sigue los mismos pasos de este ultimo apartado,pero utiliza Peru 
-2.Traza tus tres capas en R 
+# Ejercicio 2
+
+1.  Sigue los mismos pasos de este ultimo apartado,pero utiliza Peru 2.Traza tus tres capas en R
 
 ```{r}
 Peru<- "C:/Users/USER/Documents/GitHub/introgeodf/maps/Peru_data.gpkg"
@@ -65,7 +65,8 @@ baseLayer=ggplot(data=peru)  + geom_sf(fill='grey90') + theme_light()
 final=baseLayer + geom_sf(data=peru_rivers, color='blue') + geom_sf(data=peru_cities, color='red') 
 final
 ```
-##Ejercicio 3
+
+# Ejercicio 3
 
 ```{r}
 Peru_air="C:/Users/USER/Documents/GitHub/introgeodf/maps/PeruMaps_8901.gpkg"
@@ -74,6 +75,7 @@ Peru_air="C:/Users/USER/Documents/GitHub/introgeodf/maps/PeruMaps_8901.gpkg"
 ```{r}
 st_layers(Peru_air)
 ```
+
 ```{r}
 peru=read_sf(Peru_air,layer="country")
 peru_cities=read_sf(Peru_air,layer="cities")
@@ -82,7 +84,6 @@ peru_centroid=read_sf(Peru_air,layer="centroid")
 peru_air=read_sf(Peru_air,layer="airports")
 ```
 
-
 ```{r}
 baseLayer=ggplot(data=peru)  + geom_sf(fill='grey90') + theme_light()
 final=baseLayer + geom_sf(data=peru_rivers, color='blue')  + geom_sf(data=peru_air, color='black') + geom_sf(data=peru_cities, color='red') +
@@ -90,8 +91,25 @@ final=baseLayer + geom_sf(data=peru_rivers, color='blue')  + geom_sf(data=peru_a
 final
 ```
 
-##Ejercicio 4 : :( no me alcanzo el tiempo unu
+# Ejercicio 4 :
 
+```{r}
+americ_rp_gpkg="C:/Users/USER/Documents/GitHub/introgeodf/maps/America_2023_prjed.gpkg"
+sf::st_layers(americ_rp_gpkg)
+```
 
+```{r}
+ame=read_sf(americ_rp_gpkg,layer="countries")
+ame_cen=read_sf(americ_rp_gpkg,layer="centroids")
+```
 
+```{r}
+library(ggplot2)
+baseLayer=ggplot(data=ame)  + geom_sf(fill='grey90') + theme_light() 
+final=baseLayer + geom_sf(data=ame_cen,aes(color=Total_ei5_cat),size=2+ame_cen$Total_ei5) +
+    guides(size=NULL) +
+  coord_sf(datum = st_crs(ame))
 
+final
+
+```

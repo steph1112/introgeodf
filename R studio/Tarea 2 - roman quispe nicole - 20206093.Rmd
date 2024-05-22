@@ -1,6 +1,6 @@
 ---
 title: "Tarea 2 ASIES 20206093"
-author: "---"
+author: "Nicole Roman Quispe"
 date: "2024-04-17"
 output: html_document
 ---
